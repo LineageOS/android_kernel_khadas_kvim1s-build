@@ -1,0 +1,37 @@
+# SPDX-License-Identifier: GPL-2.0
+
+load("//vendor/amlogic/kernel:kernel_platform.bzl", "amlogic_kernel_platform")
+load("//vendor/amlogic/gpu-modules/bifrost:defs.bzl", "mali_bifrost_module")
+load("//vendor/amlogic/dhd-driver:defs.bzl", "bcmdhd_591_sdio_module")
+load("//vendor/amlogic/media-modules:defs.bzl", "media_modules_module")
+load("//vendor/amlogic/common_drivers:defs.bzl", "common_drivers_module")
+load(":modules.bzl", "COMMON_DRIVERS_MODULES", "KVIM1S_MODULES")
+
+package(
+    default_visibility = ["//visibility:public"],
+)
+
+bcmdhd_591_sdio_module(name = "wlan_ap6356", kernel_build = ":kvim1s", deps = [":common_drivers"])
+
+mali_bifrost_module(name = "gpu_bifrost", kernel_build = ":kvim1s", deps = [":common_drivers"])
+
+media_modules_module(name = "media", kernel_build = ":kvim1s", deps = [":common_drivers"])
+
+common_drivers_module(name = "common_drivers", kernel_build = ":kvim1s", outs = COMMON_DRIVERS_MODULES)
+
+amlogic_kernel_platform(
+    name = "kvim1s",
+    dtb_outs = [
+        "kvim1s.dtb",
+        "android_overlay_dt.dtbo",
+    ],
+    module_outs = KVIM1S_MODULES,
+    build_config = "//vendor/amlogic/kernel:build.config.kvim1s.bazel",
+    kmi_symbol_list = "//vendor/amlogic/kernel:android/abi_gki_aarch64_amlogic",
+    kernel_modules = [
+        ":wlan_ap6356",
+        ":gpu_bifrost",
+        ":media",
+        ":common_drivers",
+    ],
+)
