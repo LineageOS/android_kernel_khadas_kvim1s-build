@@ -4,7 +4,7 @@ load("//vendor/amlogic/kernel:kernel_platform.bzl", "amlogic_kernel_platform")
 load("//vendor/amlogic/gpu-modules/bifrost:defs.bzl", "mali_bifrost_module")
 load("//vendor/amlogic/dhd-driver:defs.bzl", "bcmdhd_591_sdio_module")
 load("//vendor/amlogic/media-modules:defs.bzl", "media_modules_module")
-load(":modules.bzl", "COMMON_DRIVERS_MODULES", "GKI_MODULES_REMOVE", "KVIM1S_MODULES", "MODULES_OUT_REMOVE")
+load(":modules.bzl", "COMMON_DRIVERS_MODULES", "GKI_MODULES_REMOVE", "KVIM1S_MODULES", "MODULES_OUT_REMOVE", "SYSTEM_DLKM_MODULES")
 
 package(
     default_visibility = ["//visibility:public"],
@@ -22,8 +22,9 @@ amlogic_kernel_platform(
         "kvim1s.dtb",
         "android_overlay_dt.dtbo",
     ],
-    module_outs = [m for m in KVIM1S_MODULES + COMMON_DRIVERS_MODULES if m not in MODULES_OUT_REMOVE],
-    gki_modules_remove = GKI_MODULES_REMOVE,
+    module_outs = [m for m in KVIM1S_MODULES + COMMON_DRIVERS_MODULES + SYSTEM_DLKM_MODULES if m not in MODULES_OUT_REMOVE],
+    gki_modules_remove = GKI_MODULES_REMOVE + SYSTEM_DLKM_MODULES,
+    system_dlkm_modules_load = ["kernel/" + m for m in SYSTEM_DLKM_MODULES] + [""],
     build_config = "//vendor/amlogic/kernel:build.config.kvim1s.bazel",
     kmi_symbol_list = "//vendor/amlogic/kernel:android/abi_gki_aarch64_amlogic",
     kernel_modules = [
