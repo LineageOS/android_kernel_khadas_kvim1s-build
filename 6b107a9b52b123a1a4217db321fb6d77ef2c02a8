@@ -16,6 +16,24 @@
       "message": "```suggestion\n    build_config \u003d \":kvim1s_build_config\",\n```",
       "revId": "6b107a9b52b123a1a4217db321fb6d77ef2c02a8",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d2d754b_58afae71",
+        "filename": "BUILD.bazel",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 17162
+      },
+      "writtenOn": "2026-09-13T06:34:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53c219f6_92b742ea",
+      "revId": "6b107a9b52b123a1a4217db321fb6d77ef2c02a8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
